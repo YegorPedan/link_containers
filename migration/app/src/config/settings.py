@@ -1,6 +1,5 @@
 from logging.config import dictConfig
 import os
-from corsheaders.defaults import default_headers
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +23,6 @@ PROJECT_APPS = []
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'corsheaders',
 ]
 
 INSTALLED_APPS += PROJECT_APPS

@@ -5,17 +5,18 @@ PYTHON_TEST_DB_NAME ?= pythontestdb
 PYTHON_TEST_DB_USERNAME ?= pythontestdb
 PYTHON_TEST_DB_PASSWORD ?= pythontestdbpwd
 PYTHON_TEST_DB_DATA_PATH ?= /src/docker/python-test-db-data/
-PYTHON_TEST_DB_PROXY_NETWORK ?= "proxy-network-python-test"
+PYTHON_TEST_DB_PROXY_NETWORK ?= "Proxy-network-python-test"
 
 .PHONY: default
-default:
+
+default: run
 
 .PHONY: build
 build:
 	docker build -t $(PYTHON_TEST_DB_IMAGE_NAME):$(PYTHON_TEST_DB_IMAGE_VERSION) -f Dockerfile .
 
 .PHONY: run
-run:
+run: build
 	- docker network create $(PYTHON_TEST_DB_PROXY_NETWORK)
 	- mkdir -p $(PYTHON_TEST_DB_DATA_PATH)
 	APP_PROXY_NETWORK=$(PYTHON_TEST_DB_PROXY_NETWORK) \
@@ -28,7 +29,7 @@ run:
 	docker-compose -p $(PYTHON_TEST_DB_PROJECT) -f docker-compose.yaml up -d
 
 .PHONY: down
-down:
+down: run
 	- docker network create $(PYTHON_TEST_DB_PROXY_NETWORK)
 	- mkdir -p $(PYTHON_TEST_DB_DATA_PATH)
 	sleep 1

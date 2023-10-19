@@ -12,7 +12,7 @@ services:
     volumes:
       - "${APP_DB_DATA_PATH}:/var/lib/postgresql/data/external"
     ports:
-      - "5432:5432"
+      - "1444:1444"
 
 networks:
   default:

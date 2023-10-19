@@ -9,10 +9,10 @@ PYTHON_TEST_DB_HOST ?= python-test-db
 PYTHON_TEST_PROXY_NETWORK ?= "proxy-network-python-test"
 
 .PHONY: default
-default:
+default: run
 
 .PHONY: run
-run:
+run: build
 	- docker network create $(PYTHON_TEST_PROXY_NETWORK)
 	sleep 1
 	APP_IMAGE_VERSION=$(PYTHON_TEST_API_IMAGE_VERSION) \
@@ -30,7 +30,7 @@ build:
 	docker build -t $(PYTHON_TEST_API_IMAGE_NAME):$(PYTHON_TEST_API_IMAGE_VERSION) -f Dockerfile .
 
 .PHONY: down
-down:
+down: run
 	- docker network create $(PYTHON_TEST_PROXY_NETWORK)
 	sleep 1
 	APP_IMAGE_VERSION=$(PYTHON_TEST_API_IMAGE_VERSION) \
